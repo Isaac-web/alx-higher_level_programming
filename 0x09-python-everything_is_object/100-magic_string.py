@@ -1,8 +1,4 @@
 #!/usr/bin/python3
-"""Magic string module"""
-
-count = 1
 def magic_string():
-    """ returns the string times the number of iterations  """
+    magic_string.n = getattr(magic_string, "n", 0) + 1
     return "Best School" * count
-    count += 1
