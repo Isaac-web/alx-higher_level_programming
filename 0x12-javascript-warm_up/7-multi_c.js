@@ -1,3 +1,5 @@
+#!/usr/bin/node
+
 const numberOfPrints = parseInt(process.argv[2]);
 
 if (!numberOfPrints) {
