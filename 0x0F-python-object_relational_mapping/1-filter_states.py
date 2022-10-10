@@ -26,11 +26,10 @@ if __name__ == "__main__":
         rows = cur.fetchall()
 
         for row in rows:
-            print(row)
+            if row.name[0] == 'N':
+                print(row)
     except MySQL.Error as err:
         print("Error reading data")
     finally:
         cur.close()
         db.close()
-    
-    
