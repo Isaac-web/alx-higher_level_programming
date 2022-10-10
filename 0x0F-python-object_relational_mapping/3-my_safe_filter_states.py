@@ -1,23 +1,18 @@
 #!/usr/bin/python3
 
-import MySQLdb
 import sys
+import MySQLdb
 
 """
-This script prints the states from the database
-the marches the argument passed
+This script uses a safer approach to fetch
+states database
 """
 
 
 def configure_db():
-    """
-    configures the database connection and returns the db
-    connection object
-    """
     username = sys.argv[1]
     password = sys.argv[2]
     database = sys.argv[3]
-
     return MySQLdb.connect(
         host="localhost", port=3306, user=username,
         passwd=password, db=database)
@@ -28,11 +23,16 @@ if __name__ == "__main__":
     cur = db.cursor()
     pattern = sys.argv[4]
 
+    if len(pattern) > 15:
+        return
+
     try:
         cur.execute(
-            "SELECT * FROM states WHERE name = {} ORDER BY id ASC;"
-            .format(pattern))
+            "SELECT * FROM states WHERE name = {} ORDER BY id"
+            .format(pattern)
+        )
         rows = cur.fetchall()
+
         for row in rows:
             print(row)
     except MySQLdb.Error as err:
