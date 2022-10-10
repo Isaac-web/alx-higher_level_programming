@@ -20,12 +20,12 @@ if __name__ == "__main__":
     cur = db.cursor()
 
     try:
-        db.execute("SELECT * FROM states states ORDER BY id")
-        rows = db.fetchall()
+        cur.execute("SELECT * FROM states states ORDER BY id ASC")
+        rows cur.fetchall()
         for row in rows:
-            print("({}, '{}')".format(row.id, row.name))
+            print(row)
     except MySQLdb.Error as err:
-        print("Error")
+        print("Something went wrong fetching the data.")
     finally:
         cur.close()
         db.close()
