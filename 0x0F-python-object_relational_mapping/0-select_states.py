@@ -1,10 +1,12 @@
 #!/usr/bin/python3
-"""
-This Module prints the result to a query for a database
-"""
 
 import sys
 import MySQLdb
+
+'''
+This script lists all the states
+in the database
+'''
 
 username = sys.argv[1]
 password = sys.argv[2]
