@@ -32,6 +32,9 @@ if __name__ == "__main__":
         cur.execute(
             "SELECT * FROM states WHERE name = {} ORDER BY id ASC"
             .format(pattern))
+        rows = cur.fetchall()
+        for row in rows:
+            print(row)
     except MySQLdb.Error as err:
         print("Something went wrong.")
     finally:
