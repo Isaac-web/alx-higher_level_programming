@@ -4,15 +4,15 @@ import MySQLdb
 import sys
 
 """
-This script prints the states from the database
-the marches the argument passed
+This script selects the cities in the database
+and prints them to the output
 """
 
 
 def configure_db():
     """
-    configures the database connection and returns the db
-    connection object
+    Returns a DBAPI connection object after
+    configuring the database
     """
     username = sys.argv[1]
     password = sys.argv[2]
@@ -26,12 +26,9 @@ def configure_db():
 if __name__ == "__main__":
     db = configure_db()
     cur = db.cursor()
-    pattern = sys.argv[4]
 
     try:
-        cur.execute(
-            "SELECT * FROM states WHERE name = {} ORDER BY id ASC;"
-            .format(pattern))
+        cur.execute("SELECT * FROM cities ORDER BY id ASC")
         rows = cur.fetchall()
         for row in rows:
             print(row)
