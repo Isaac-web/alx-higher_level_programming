@@ -1,4 +1,3 @@
 #!/bin/bash
-#prints the status code of a get request
-
-curl -sI "$1" | grep HTTP | cut -d " " -f 2
+# Displays only the status code
+curl -sLw "%{http_code}" -o /dev/null "$1"
