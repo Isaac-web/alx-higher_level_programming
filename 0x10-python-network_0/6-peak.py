@@ -2,22 +2,28 @@
 """Just a regular module"""
 
 
-def find_peak(list_of_integers):
+def find_peak(numbr):
     """
         Returns the peak of of numbers provided
         Args:
             list_of_integers(int): List of intergers
         Return: the peak
     """
-    peak = None
-    for i in range(len(list_of_integers)):
-        current, left, right = list_of_integers[i], 0, 0
-        if i > 0:
-            left = list_of_integers[i-1]
-        if i < len(list_of_integers) - 1:
-            right = list_of_integers[i+1]
-        if current > left and current > right:
-            peak = current
-        elif current == left and current == right:
-            peak = current
-    return peak
+    length = len(numbr)
+    if length == 0:
+        return None
+    if length == 1:
+        return (numbr[0])
+    if length == 2:
+        return numbr[0] if numbr[0] >= numbr[1] else numbr[1]
+
+    for idx in range(0, length):
+        value = numbr[idx]
+        if (idx > 0 and idx < length - 1 and
+                numbr[idx + 1] <= value and numbr[idx - 1] <= value):
+            return value
+        elif idx == 0 and numbr[idx + 1] <= value:
+            return value
+        elif idx == length - 1 and numbr[idx - 1] <= value:
+            return value
+    return pick
