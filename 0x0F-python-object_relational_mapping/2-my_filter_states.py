@@ -1,42 +1,35 @@
 #!/usr/bin/python3
-
+"""
+This script returns all the states
+that match the search patten
+"""
 import MySQLdb
-import sys
-
-"""
-This script prints the states from the database
-the marches the argument passed
-"""
+from sys import argv
 
 
 def configure_db():
     """
-    configures the database connection and returns the db
-    connection object
+    Returns a db connection
     """
-    username = sys.argv[1]
-    password = sys.argv[2]
-    database = sys.argv[3]
+    db = MySQLdb.connect(
+            user=argv[1], passwd=argv[2], host="localhost",
+            port=3306, db=argv[3])
 
-    return MySQLdb.connect(
-        host="localhost", port=3306, user=username,
-        passwd=password, db=database)
+    return db
 
 
 if __name__ == "__main__":
     db = configure_db()
     cur = db.cursor()
-    pattern = sys.argv[4]
-
+    pattern = argv[4]
     try:
-        cur.execute(
-            "SELECT * FROM states WHERE name = {} ORDER BY id ASC;"
-            .format(pattern))
+        cur.execute("SELECT * FROM states WHERE name = '{}'".format(pattern))
         rows = cur.fetchall()
-        for row in rows:
-            print(row)
-    except MySQLdb.Error as err:
-        print("Something went wrong.")
+
+        for r in rows:
+            print(r)
+    except MySQLdb.Error:
+        print("Something went wrong...")
     finally:
         cur.close()
         db.close()
