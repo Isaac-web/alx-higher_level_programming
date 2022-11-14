@@ -23,7 +23,8 @@ if __name__ == "__main__":
     cur = db.cursor()
     pattern = argv[4]
     try:
-        cur.execute("SELECT * FROM states WHERE BINARY name = '{}'".format(pattern))
+        cur.execute(
+            "SELECT * FROM states WHERE BINARY name = '{}'".format(pattern))
         rows = cur.fetchall()
 
         for r in rows:
