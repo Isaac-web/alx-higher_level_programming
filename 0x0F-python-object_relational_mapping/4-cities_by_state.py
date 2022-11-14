@@ -1,39 +1,32 @@
 #!/usr/bin/python3
+"""
+Returns all cities from the database
+"""
 
 import MySQLdb
-import sys
-
-"""
-This script selects the cities in the database
-and prints them to the output
-"""
+from sys import argv
 
 
 def configure_db():
     """
-    Returns a DBAPI connection object after
-    configuring the database
+    Returns a db connection
     """
-    username = sys.argv[1]
-    password = sys.argv[2]
-    database = sys.argv[3]
-
-    return MySQLdb.connect(
-        host="localhost", port=3306, user=username,
-        passwd=password, db=database)
-
+    return MySQLdb.connec(user=argv[1], 
+        passwd=argv[2], db=argv[3], host="localhost", port=3306)
+    
 
 if __name__ == "__main__":
     db = configure_db()
-    cur = db.cursor()
 
     try:
-        cur.execute("SELECT * FROM cities ORDER BY id ASC")
+        cur = db.cursor();
+        cur.execute("SELECT * FROM cities ORDER BY id")
         rows = cur.fetchall()
-        for row in rows:
-            print(row)
-    except MySQLdb.Error as err:
-        print("Something went wrong.")
+
+        for r in rows:
+            print(r)
+    except MySQLdb.Error:
+        print("Something went wrong...")
     finally:
         cur.close()
         db.close()

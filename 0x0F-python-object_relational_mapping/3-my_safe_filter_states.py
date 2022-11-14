@@ -26,7 +26,7 @@ if __name__ == "__main__":
         cur.execute(
             "SELECT * FROM states WHERE BINARY name = '{}'".format(pattern))
         rows = cur.fetchall()
-        
+
         for r in rows:
             print(r)
     except MySQLdb.Error:
