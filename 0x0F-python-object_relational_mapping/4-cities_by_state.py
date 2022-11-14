@@ -11,15 +11,18 @@ def configure_db():
     """
     Returns a db connection
     """
-    return MySQLdb.connec(user=argv[1], 
-        passwd=argv[2], db=argv[3], host="localhost", port=3306)
-    
+    db = MySQLdb.connect(
+            user=argv[1], passwd=argv[2], host="localhost",
+            port=3306, db=argv[3])
+
+    return db
+
 
 if __name__ == "__main__":
     db = configure_db()
 
     try:
-        cur = db.cursor();
+        cur = db.cursor()
         cur.execute("SELECT * FROM cities ORDER BY id")
         rows = cur.fetchall()
 
