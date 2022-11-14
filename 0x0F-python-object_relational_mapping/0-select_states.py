@@ -1,12 +1,11 @@
 #!/usr/bin/python3
 
-import sys
-import MySQLdb
-
 '''
 This script lists all the states
 in the database
 '''
+import sys
+import MySQLdb
 
 if __name__ == "__main__":
     username = sys.argv[1]
