@@ -1,42 +1,28 @@
 #!/usr/bin/python3
-
-import sys
+"""
+This script returns all the states
+that match the search patten
+"""
 import MySQLdb
-
-"""
-This script uses a safer approach to fetch
-states database
-"""
+from sys import argv
 
 
 def configure_db():
-    username = sys.argv[1]
-    password = sys.argv[2]
-    database = sys.argv[3]
-    return MySQLdb.connect(
-        host="localhost", port=3306, user=username,
-        passwd=password, db=database)
+    """
+    Returns a db connection
+    """
+    db = MySQLdb.connect(
+            user=argv[1], passwd=argv[2], host="localhost",
+            port=3306, db=argv[3])
+
+    return db
 
 
 if __name__ == "__main__":
     db = configure_db()
     cur = db.cursor()
-    pattern = sys.argv[4]
-
-    if len(pattern) > 15:
-        return
-
+    pattern = argv[4]
     try:
         cur.execute(
-            "SELECT * FROM states WHERE name = {} ORDER BY id"
-            .format(pattern)
-        )
+            "SELECT * FROM states WHERE BINARY name = '{}'".format(pattern))
         rows = cur.fetchall()
-
-        for row in rows:
-            print(row)
-    except MySQLdb.Error as err:
-        print("Something went wrong.")
-    finally:
-        cur.close()
-        db.close()
