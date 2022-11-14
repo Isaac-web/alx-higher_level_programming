@@ -20,7 +20,7 @@ if __name__ == "__main__":
 
     try:
         cur.execute("SELECT * FROM states states ORDER BY id ASC")
-        rows cur.fetchall()
+        rows = cur.fetchall()
         for row in rows:
             print(row)
     except MySQLdb.Error as err:
