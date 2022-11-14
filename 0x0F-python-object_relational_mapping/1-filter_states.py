@@ -7,23 +7,19 @@ import MySQLdb
 import sys
 
 
-def configure_db():
-    """Connects to the database"""
-    username = sys.argv[1]
-    password = sys.argv[2]
-    database = sys.argv[3]
-
-    db = MySQLdb.connect(
-            user=username, passwd=password, host="localhost", db=database)
-    return db
-
-
 if __name__ == "__main__":
-    db = configure_db()
+    db = MySQLdb.connect(
+            user=sys.argv[1], passwd=sys.argv[2], db=sys.argv[3], port=3306)
     cur = db.cursor()
 
-    result = cur.execute(
-            "SELECT * FROM states WHERE name LIKE 'N%' ORDER_BY id")
+    try:
+        cur.execute("SELECT * FROM states WHERE name LIKE 'N%'")
+        rows = cur.fetchall()
 
-    for state in result.fetch_all():
-        print(state, end="\n")
+        for r in rows:
+            print(r)
+    except MySQLdb.Error:
+        print("Something went wrong...")
+    finally:
+        cur.close()
+        db.close()
