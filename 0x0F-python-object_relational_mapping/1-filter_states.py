@@ -13,7 +13,7 @@ if __name__ == "__main__":
     cur = db.cursor()
 
     try:
-        cur.execute("SELECT * FROM states WHERE name LIKE 'N%'")
+        cur.execute("SELECT * FROM states WHERE name LIKE BINARY 'N%'")
         rows = cur.fetchall()
 
         for r in rows:
