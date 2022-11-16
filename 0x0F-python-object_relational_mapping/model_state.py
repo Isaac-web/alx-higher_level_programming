@@ -1,9 +1,5 @@
 #!/usr/bin/python3
-"""
-This module defines a SQLAchamey
-domain object
-"""
-
+"""This module defines a SQLAchameydomain object"""
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, Integer, Sequence
 from sqlalchemy import create_engine
