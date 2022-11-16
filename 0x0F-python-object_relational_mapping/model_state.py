@@ -25,4 +25,5 @@ class State(Base):
     name = Column(String(128), nullable=False)
 
 
-Base.metadata.create_all(engine)
+if __name__ == "__main__":
+    Base.metadata.create_all(engine)
