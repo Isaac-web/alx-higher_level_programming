@@ -7,29 +7,20 @@ import MySQLdb
 from sys import argv
 
 
-def configure_db():
-    """
-    Returns a db connection
-    """
-    db = MySQLdb.connect(
-            user=argv[1], passwd=argv[2], host="localhost",
-            port=3306, db=argv[3])
-
-    return db
-
-
 if __name__ == "__main__":
-    db = configure_db()
+    db = MySQLdb.connect(user="root", 
+            passwd="$$Superdad77", host="localhost", db="hbtn_0e_4_usa")
+    
+    cur = db.cursor()
 
     try:
-        cur = db.cursor()
         cur.execute("SELECT * FROM cities ORDER BY id")
         rows = cur.fetchall()
-
         for r in rows:
             print(r)
     except MySQLdb.Error:
-        print("Something went wrong...")
+        print("Somethig went wrong...")
     finally:
         cur.close()
         db.close()
+
