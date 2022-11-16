@@ -1,5 +1,10 @@
 #!/usr/bin/python3
-"""This module defines a SQLAchameydomain object"""
+"""
+This module contains code that
+create a State class that inherits from
+Base class and maps to a table in the
+mysql database
+"""
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, Integer, Sequence
 from sqlalchemy import create_engine
