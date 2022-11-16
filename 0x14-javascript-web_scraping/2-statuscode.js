@@ -1,6 +1,6 @@
-const request = require("request");
+const request = require('request');
 
-function printStatusCode(url) {
+function printStatusCode (url) {
   request.get({ url }, (err, response, body) => {
     if (err) return console.log(err);
     console.log(`code: ${response.statusCode}`);

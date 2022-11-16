@@ -1,7 +1,7 @@
 #!/usr/bin/node
-const fs = require("fs");
-function readAndPrint(file) {
-  fs.readFile(file, "utf-8", (err, data) => {
+const fs = require('fs');
+function readAndPrint (file) {
+  fs.readFile(file, 'utf-8', (err, data) => {
     if (err) return console.log(err);
 
     console.log(data);

@@ -1,11 +1,11 @@
 #!/usr/bin/node
 
-const request = require("request");
-const fs = require("fs");
+const request = require('request');
+const fs = require('fs');
 
-function queryWebPage(url, file) {
-  request.get({ url }, (err, _, body) => {
-    fs.writeFile(file, body, { encoding: "utf-8" }, (err) => {
+function queryWebPage (url, file) {
+  request.get({ url }, (err, response, body) => {
+    fs.writeFile(file, body, { encoding: 'utf-8' }, (err) => {
       if (err) console.log(err);
     });
   });

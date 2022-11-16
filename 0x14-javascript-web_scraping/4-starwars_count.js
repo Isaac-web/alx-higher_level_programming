@@ -1,12 +1,12 @@
 #!/usr/bin/node
-const request = require("request");
+const request = require('request');
 
-function verifyMovie(characters) {
-  const result = characters.filter((c) => c.endsWith("18/"));
+function verifyMovie (characters) {
+  const result = characters.filter((c) => c.endsWith('18/'));
   return result.length ? true : false;
 }
 
-function printMovieCount(url) {
+function printMovieCount (url) {
   request.get({ url }, (err, response, body) => {
     let results = JSON.parse(body).results;
     results = results.map((r) => r.characters);

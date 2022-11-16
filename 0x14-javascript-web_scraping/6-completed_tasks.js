@@ -1,21 +1,21 @@
 #!/usr/bin/node
-const request = require("request");
+const request = require('request');
 
-function getTotos() {
-  const url = "https://jsonplaceholder.typicode.com/todos";
+function getTotos () {
+  const url = 'https://jsonplaceholder.typicode.com/todos';
 
   request.get({ url }, (err, response, body) => {
-    let results = JSON.parse(body);
+    const results = JSON.parse(body);
 
-    const user_tasks = {};
+    const userTasks = {};
     for (let i = 1; i <= 10; i++) {
       const completed = results.filter(
-        (t) => t.userId == i && t.completed == true
+        (t) => t.userId === i && t.completed === true
       );
-      user_tasks[i] = completed.length;
+      userTasks[i] = completed.length;
     }
 
-    console.log(user_tasks);
+    console.log(userTasks);
   });
 }
 
