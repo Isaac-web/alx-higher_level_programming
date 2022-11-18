@@ -20,6 +20,9 @@ if __name__ == "__main__":
         session = Session(bind=engine)
 
         state = session.query(State).order_by(State.id).first()
-        print("{}: {}".format(state.id, state.name))
+        if not state:
+            print("Nothing")
+        else:
+            print("{}: {}".format(state.id, state.name))
     except Exception as e:
         print(e)
