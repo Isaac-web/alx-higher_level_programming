@@ -16,4 +16,11 @@ def configure_db(username, password, database):
     return create_engine(str)
 
 
-engine = configure_db(argv[1], argv[2], argv[3])
+
+try:
+    username = argv[1] or 0
+    password = argv[2]
+    db = argv[3]
+    engine = configure_db(username, password, db)
+except Exception as e:
+    pass
