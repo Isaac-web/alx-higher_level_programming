@@ -28,5 +28,3 @@ if __name__ == "__main__":
             print("{}: {}".format(s.id, s.name))
     except Exception as e:
         print(e)
-    
-
