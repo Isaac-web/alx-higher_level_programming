@@ -14,3 +14,8 @@ def configure_db(username, password, database):
     str = "mysql+pymysql://{}:{}@localhost:3306/{}".format(
             username, password, database)
     return create_engine(str)
+
+
+engine = configure_db(argv[1], argv[2], argv[3])
+session = Session(bind=engine)
+
