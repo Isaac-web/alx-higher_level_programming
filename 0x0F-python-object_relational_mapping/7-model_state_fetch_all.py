@@ -16,15 +16,16 @@ def configure_db(username, password, database):
     return create_engine(str)
 
 
-try:
-    username = argv[1] or 0
-    password = argv[2]
-    db = argv[3]
-    engine = configure_db(username, password, db)
-    session = Session(bind=engine)
+if __name__ == "__main__":
+    try:
+        username = argv[1]
+        password = argv[2]
+        db = argv[3]
+        engine = configure_db(username, password, db)
+        session = Session(bind=engine)
 
-    states = session.query(State).order_by(State.id).all()
-    for s in states:
-        print("{}: {}".format(s.id, s.name))
-except Exception as e:
-    pass
+        states = session.query(State).order_by(State.id).all()
+        for s in states:
+            print("{}: {}".format(s.id, s.name))
+    except Exception as e:
+        pass
