@@ -1,47 +1,18 @@
 #!/usr/bin/python3
-
-import sys
+"""  lists all states from the database hbtn_0e_0_usa """
 import MySQLdb
-
-"""
-This script takes the name of a state as
-an agument and prints its corresponding
-cities in the database
-"""
-
-
-def configure_db():
-    username = sys.argv[1]
-    password = sys.argv[2]
-    database = sys.argv[3]
-
-    return MySQLdb.connect(
-        host="localhost", port=3306, user=username,
-        passwd=password, db=database)
+import sys
 
 
 if __name__ == "__main__":
-    db = configure_db()
+    db = MySQLdb.connect(host="localhost", user=sys.argv[1],
+                         passwd=sys.argv[2], db=sys.argv[3], port=3306)
     cur = db.cursor()
-    state_name = sys.argv[4]
-
-    try:
-        cur.execute(
-            """
-               SELECT *
-               FROM cities
-               WHERE state_id = (
-                    SELECT id
-                    FROM states
-                    WHERE name = {}
-                )
-            """.format(state_name)
-        )
-
-        rows = cur.fetchall()
-
-        for row in rows:
-            print(row)
-
-    except MySQLdb.Error as err:
-        print("Something went wrong.")
+    cur.execute("""SELECT cities.name FROM
+                cities INNER JOIN states ON states.id=cities.state_id
+                WHERE states.name=%s""", (sys.argv[4],))
+    rows = cur.fetchall()
+    tmp = list(row[0] for row in rows)
+    print(*tmp, sep=", ")
+    cur.close()
+    db.close()

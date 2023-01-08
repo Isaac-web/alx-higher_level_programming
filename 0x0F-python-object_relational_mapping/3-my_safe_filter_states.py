@@ -1,36 +1,17 @@
 #!/usr/bin/python3
-"""
-This script returns all the states
-that match the search patten
-"""
+"""  lists all states from the database hbtn_0e_0_usa """
 import MySQLdb
-from sys import argv
-
-
-def configure_db():
-    """
-    Returns a db connection
-    """
-    db = MySQLdb.connect(
-            user=argv[1], passwd=argv[2], host="localhost",
-            port=3306, db=argv[3])
-
-    return db
+import sys
 
 
 if __name__ == "__main__":
-    db = configure_db()
+    db = MySQLdb.connect(host="localhost", user=sys.argv[1],
+                         passwd=sys.argv[2], db=sys.argv[3], port=3306)
     cur = db.cursor()
-    pattern = argv[4]
-    try:
-        cur.execute(
-            "SELECT * FROM states WHERE BINARY name = '{}'".format(pattern))
-        rows = cur.fetchall()
-
-        for r in rows:
-            print(r)
-    except MySQLdb.Error:
-        print("Something went wrong...")
-    finally:
-        cur.close()
-        db.close()
+    match = sys.argv[4]
+    cur.execute("SELECT * FROM states WHERE name LIKE %s", (match, ))
+    rows = cur.fetchall()
+    for row in rows:
+        print(row)
+    cur.close()
+    db.close()

@@ -1,28 +1,18 @@
 #!/usr/bin/python3
+""" prints the State object with the name passed as argument from the database
 """
-This module contains a States class that
-maps to a states table in the database
-"""
-from sqlalchemy import create_engine
-from sqlalchemy.orm import Session
+import sys
 from model_state import Base, State
-from sys import argv
-
-
-def configure_db(username, password, database):
-    """configures a new db engine"""
-    str = "mysql://{}:{}@localhost:3306/{}".format(
-            username, password, database)
-    return create_engine(str)
+from sqlalchemy import (create_engine)
+from sqlalchemy.orm import sessionmaker
 
 
 if __name__ == "__main__":
-    try:
-        engine = configure_db(argv[1], argv[2], argv[3])
-        session = Session(bind=engine)
-
-        state = session.query(State).filter(State.id == 2).first()
-        state.name = "New Mexico"
-        session.commit()
-    except Exception as e:
-        print(e)
+    engine = create_engine('mysql+mysqldb://{}:{}@localhost:3306/{}'
+                           .format(sys.argv[1], sys.argv[2], sys.argv[3]))
+    Base.metadata.create_all(engine)
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    new_instance = session.query(State).filter_by(id=2).first()
+    new_instance.name = 'New Mexico'
+    session.commit()

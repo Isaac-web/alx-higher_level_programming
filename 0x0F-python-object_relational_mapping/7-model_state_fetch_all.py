@@ -1,31 +1,17 @@
 #!/usr/bin/python3
+"""Start link class to table in database
 """
-This module contains a States class that
-maps to a states table in the database
-"""
-from sqlalchemy import create_engine
-from sqlalchemy.orm import Session
+import sys
 from model_state import Base, State
-from sys import argv
-
-
-def configure_db(username, password, database):
-    """configures a new db engine"""
-    str = "mysql://{}:{}@localhost:3306/{}".format(
-            username, password, database)
-    return create_engine(str)
+from sqlalchemy import (create_engine)
+from sqlalchemy.orm import sessionmaker
 
 
 if __name__ == "__main__":
-    try:
-        username = argv[1]
-        password = argv[2]
-        db = argv[3]
-        engine = configure_db(username, password, db)
-        session = Session(bind=engine)
-
-        states = session.query(State).order_by(State.id).all()
-        for s in states:
-            print("{}: {}".format(s.id, s.name))
-    except Exception as e:
-        pass
+    engine = create_engine('mysql+mysqldb://{}:{}@localhost:3306/{}'
+                           .format(sys.argv[1], sys.argv[2], sys.argv[3]))
+    Base.metadata.create_all(engine)
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    for instance in session.query(State).order_by(State.id):
+        print(instance.id, instance.name, sep=": ")
